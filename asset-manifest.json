@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/cheating_bee/static/css/main.ab58b2d1.css",
+    "main.js": "/cheating_bee/static/js/main.77764d14.js",
+    "static/js/453.e035edf7.chunk.js": "/cheating_bee/static/js/453.e035edf7.chunk.js",
+    "static/media/logo.svg": "/cheating_bee/static/media/logo.af0b759d6ffd7de3806cdf5435bebc31.svg",
+    "index.html": "/cheating_bee/index.html",
+    "main.ab58b2d1.css.map": "/cheating_bee/static/css/main.ab58b2d1.css.map",
+    "main.77764d14.js.map": "/cheating_bee/static/js/main.77764d14.js.map",
+    "453.e035edf7.chunk.js.map": "/cheating_bee/static/js/453.e035edf7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ab58b2d1.css",
+    "static/js/main.77764d14.js"
+  ]
+}
