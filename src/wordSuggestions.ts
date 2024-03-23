@@ -4,7 +4,7 @@ type Dictionary = {
     words: string[];
 }
 
-type Words = {
+export type Words = {
     pangrams: string[];
     otherWords: string[];
 };

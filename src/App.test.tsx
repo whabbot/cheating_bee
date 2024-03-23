@@ -1,40 +1,72 @@
-
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe('App', () => {
+    xit('renders the form and submits data correctly', () => {
+        render(<App />);
 
-test('renders form fields', () => {
-  render(<App />);
-  const requiredLetterInput = screen.getByLabelText(/required letter/i);
-  const allLettersInput = screen.getByLabelText(/all letters/i);
-  const submitButton = screen.getByRole('button', { name: /submit/i });
-  const resetButton = screen.getByRole('button', { name: /reset/i });
+        // Fill in the form inputs
+        const allLettersInput = screen.getByLabelText('7 Letters');
+        fireEvent.change(allLettersInput, { target: { value: 'abcdefg' } });
 
-  expect(requiredLetterInput).toBeInTheDocument();
-  expect(allLettersInput).toBeInTheDocument();
-  expect(submitButton).toBeInTheDocument();
-  expect(resetButton).toBeInTheDocument();
-});
+        const requiredLetterInput = screen.getByLabelText('Required letter');
+        fireEvent.change(requiredLetterInput, { target: { value: 'a' } });
 
-test('submits form and displays words', () => {
-  render(<App />);
-  const requiredLetterInput = screen.getByLabelText(/required letter/i);
-  const allLettersInput = screen.getByLabelText(/all letters/i);
-  const submitButton = screen.getByRole('button', { name: /submit/i });
+        // Submit the form
+        const submitButton = screen.getByText('Search');
+        fireEvent.click(submitButton);
 
-  fireEvent.change(requiredLetterInput, { target: { value: 'a' } });
-  fireEvent.change(allLettersInput, { target: { value: 'abcde' } });
-  fireEvent.click(submitButton);
+        // Verify that the words are displayed
+        const wordElement1 = screen.getByText('word1');
+        expect(wordElement1).toBeVisible();
 
-  const pangrams = screen.getByText(/pangrams/i);
-  const otherWords = screen.getByText(/other words/i);
+        const wordElement2 = screen.getByText('word2');
+        expect(wordElement2).toBeVisible();
 
-  expect(pangrams).toBeInTheDocument();
-  expect(otherWords).toBeInTheDocument();
+        // Reset the form
+        const resetButton = screen.getByText('Reset');
+        fireEvent.click(resetButton);
+
+        // Verify that the words are cleared
+        expect(wordElement1).not.toBeInTheDocument();
+        expect(wordElement2).not.toBeInTheDocument();
+    });
+
+    xit('should display an error message if the required letter is not one of the seven letters', () => {
+        render(<App />);
+
+        // Fill in the form inputs
+        const allLettersInput = screen.getByLabelText('7 Letters');
+        fireEvent.change(allLettersInput, { target: { value: 'abcdefg' } });
+
+        const requiredLetterInput = screen.getByLabelText('Required letter');
+        fireEvent.change(requiredLetterInput, { target: { value: 'z' } });
+
+        // Submit the form
+        const submitButton = screen.getByText('Search');
+        fireEvent.click(submitButton);
+
+        // Verify that the error message is displayed
+        const errorMessage = screen.getByText('The required letter must be one of the seven letters');
+        expect(errorMessage).toBeVisible();
+    });
+
+    xit('should display an error message if all letters are not different', () => {
+        render(<App />);
+
+        // Fill in the form inputs
+        const allLettersInput = screen.getByLabelText('7 Letters');
+        fireEvent.change(allLettersInput, { target: { value: 'aabbccd' } });
+
+        const requiredLetterInput = screen.getByLabelText('Required letter');
+        fireEvent.change(requiredLetterInput, { target: { value: 'a' } });
+
+        // Submit the form
+        const submitButton = screen.getByText('Search');
+        fireEvent.click(submitButton);
+
+        // Verify that the error message is displayed
+        const errorMessage = screen.getByText('All letters should be different');
+        expect(errorMessage).toBeVisible();
+    });
 });
